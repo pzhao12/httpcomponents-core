@@ -38,7 +38,6 @@ import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.MessageHeaders;
 import org.apache.hc.core5.http.ProtocolException;
 import org.apache.hc.core5.util.CharArrayBuffer;
-import org.apache.hc.core5.util.LangUtils;
 
 /**
  * A class for combining a set of headers.
@@ -97,14 +96,7 @@ public class HeaderGroup implements MessageHeaders, Serializable {
         if (header == null) {
             return;
         }
-        for (int i = 0; i < this.headers.size(); i++) {
-            final Header current = this.headers.get(i);
-            if (current == header || current.getName().equalsIgnoreCase(header.getName())
-                    && LangUtils.equals(header.getValue(), current.getValue())) {
-                this.headers.remove(current);
-                return;
-            }
-        }
+        headers.remove(header);
     }
 
     /**

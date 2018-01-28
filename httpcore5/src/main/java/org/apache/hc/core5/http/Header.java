@@ -28,21 +28,31 @@
 package org.apache.hc.core5.http;
 
 /**
- * Represents an HTTP header field consisting of a field name and a field
- * value.
+ * Represents an HTTP header field consisting of a field name and a field value..
  *
  * @since 4.0
  */
-public interface Header extends NameValuePair {
+public interface Header {
+
+    /**
+     * Get the name of the Header.
+     *
+     * @return the name of the Header,  never {@code null}
+     */
+    String getName();
+
+    /**
+     * Get the value of the Header.
+     *
+     * @return the value of the Header,  may be {@code null}
+     */
+    String getValue();
 
     /**
      * Returns {@code true} if the header should be considered sensitive.
      * <p>
      * Some encoding schemes such as HPACK impose restrictions on encoded
      * representation of sensitive headers.
-     * </p>
-     *
-     * @return {@code true} if the header should be considered sensitive.
      *
      * @since 5.0
      */

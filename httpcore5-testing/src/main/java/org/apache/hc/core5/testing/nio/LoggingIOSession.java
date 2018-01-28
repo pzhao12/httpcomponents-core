@@ -38,7 +38,7 @@ import org.apache.hc.core5.reactor.Command;
 import org.apache.hc.core5.reactor.IOEventHandler;
 import org.apache.hc.core5.reactor.IOSession;
 import org.apache.hc.core5.testing.classic.Wire;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 public class LoggingIOSession implements IOSession {
 
@@ -185,26 +185,6 @@ public class LoggingIOSession implements IOSession {
             this.log.debug(this.session + " Set timeout " + timeout);
         }
         this.session.setSocketTimeout(timeout);
-    }
-
-    @Override
-    public void updateReadTime() {
-        this.session.updateReadTime();
-    }
-
-    @Override
-    public void updateWriteTime() {
-        this.session.updateWriteTime();
-    }
-
-    @Override
-    public long getLastReadTime() {
-        return this.session.getLastReadTime();
-    }
-
-    @Override
-    public long getLastWriteTime() {
-        return this.session.getLastWriteTime();
     }
 
     @Override

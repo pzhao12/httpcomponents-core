@@ -28,7 +28,7 @@
   <parent>
     <groupId>org.apache.httpcomponents.core5</groupId>
     <artifactId>httpcore5-parent</artifactId>
-    <version>5.0-beta3-SNAPSHOT</version>
+    <version>5.0-alpha4-SNAPSHOT</version>
   </parent>
   <artifactId>httpcore5</artifactId>
   <name>Apache HttpComponents Core HTTP/1.1</name>
@@ -49,13 +49,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
+      <artifactId>log4j-api</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -70,6 +65,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
         <executions>
           <execution>
             <goals>
@@ -127,6 +123,7 @@
 
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>${hc.project-info.version}</version>
         <inherited>false</inherited>
         <reportSets>
           <reportSet>
@@ -141,10 +138,12 @@
 
       <plugin>
         <artifactId>maven-jxr-plugin</artifactId>
+        <version>${hc.jxr.version}</version>
       </plugin>
 
       <plugin>
         <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${hc.surefire-report.version}</version>
       </plugin>
 
     </plugins>

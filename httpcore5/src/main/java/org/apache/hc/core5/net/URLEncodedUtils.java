@@ -34,6 +34,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.hc.core5.http.NameValuePair;
@@ -82,7 +83,7 @@ public class URLEncodedUtils {
         if (query != null && !query.isEmpty()) {
             return parse(query, charset);
         }
-        return createEmptyList();
+        return Collections.emptyList();
     }
 
     /**
@@ -99,7 +100,7 @@ public class URLEncodedUtils {
      */
     public static List<NameValuePair> parse(final String s, final Charset charset) {
         if (s == null) {
-            return createEmptyList();
+            return Collections.emptyList();
         }
         final CharArrayBuffer buffer = new CharArrayBuffer(s.length());
         buffer.append(s);
@@ -122,7 +123,7 @@ public class URLEncodedUtils {
      */
     public static List<NameValuePair> parse(final String s, final Charset charset, final char... separators) {
         if (s == null) {
-            return createEmptyList();
+            return Collections.emptyList();
         }
         final CharArrayBuffer buffer = new CharArrayBuffer(s.length());
         buffer.append(s);
@@ -330,10 +331,6 @@ public class URLEncodedUtils {
     }
 
     private static final int RADIX = 16;
-
-    private static List<NameValuePair> createEmptyList() {
-        return new ArrayList<>(0);
-    }
 
     private static String urlEncode(
             final String content,

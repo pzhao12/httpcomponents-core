@@ -28,12 +28,14 @@
 package org.apache.hc.core5.http.message;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.apache.hc.core5.annotation.Contract;
 import org.apache.hc.core5.annotation.ThreadingBehavior;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.util.Args;
+import org.apache.hc.core5.util.LangUtils;
 
 /**
  * Immutable {@link Header}.
@@ -41,23 +43,13 @@ import org.apache.hc.core5.util.Args;
  * @since 4.0
  */
 @Contract(threading = ThreadingBehavior.IMMUTABLE)
-public class BasicHeader implements Header, Cloneable, Serializable {
+public class BasicHeader implements Header, Serializable {
 
     private static final long serialVersionUID = -5427236326487562174L;
 
     private final String name;
-    private final boolean sensitive;
     private final String value;
-
-    /**
-     * Default constructor
-     *
-     * @param name the header name
-     * @param value the header value, taken as the value's {@link #toString()}.
-     */
-    public BasicHeader(final String name, final Object value) {
-        this(name, value, false);
-    }
+    private final boolean sensitive;
 
     /**
      * Constructor with sensitivity flag
@@ -75,14 +67,24 @@ public class BasicHeader implements Header, Cloneable, Serializable {
         this.sensitive = sensitive;
     }
 
+    /**
+     * Default constructor
+     *
+     * @param name the header name
+     * @param value the header value, taken as the value's {@link #toString()}.
+     */
+    public BasicHeader(final String name, final Object value) {
+        this(name, value, false);
+    }
+
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     @Override
@@ -93,11 +95,30 @@ public class BasicHeader implements Header, Cloneable, Serializable {
     @Override
     public String toString() {
         final StringBuilder buf = new StringBuilder();
-        buf.append(this.getName()).append(": ");
-        if (this.getValue() != null) {
-            buf.append(this.getValue());
+        buf.append(this.name).append(": ");
+        if (this.value != null) {
+            buf.append(this.value);
         }
         return buf.toString();
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof BasicHeader) {
+            final BasicHeader that = (BasicHeader) obj;
+            return this.name.equalsIgnoreCase(that.name) && LangUtils.equals(this.value, that.value);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = LangUtils.HASH_SEED;
+        hash = LangUtils.hashCode(hash, this.name.toLowerCase(Locale.ROOT));
+        hash = LangUtils.hashCode(hash, this.value);
+        return hash;
+    }
 }
